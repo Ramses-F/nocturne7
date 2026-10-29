@@ -1,0 +1,388 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>NOCTURNE-7</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<div id="app">
+
+  <!-- ============ A. ÉCRAN D'ACCUEIL ============ -->
+  <section class="scene" id="scene-accueil" data-scene="accueil">
+    <div class="title-screen">
+      <div class="sky" aria-hidden="true">
+        <svg viewBox="0 0 900 500" preserveAspectRatio="xMidYMax slice" style="width:100%;height:100%;display:block;">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#0a1322"/><stop offset="1" stop-color="#060a12"/>
+            </linearGradient>
+          </defs>
+          <rect width="900" height="500" fill="url(#skyGrad)"/>
+          <g fill="#0c1726">
+            <rect x="0" y="300" width="140" height="200"/>
+            <rect x="130" y="230" width="190" height="270"/>
+            <rect x="300" y="150" width="150" height="350"/>
+            <rect x="430" y="260" width="170" height="240"/>
+            <rect x="580" y="200" width="160" height="300"/>
+            <rect x="720" y="320" width="180" height="180"/>
+          </g>
+          <g fill="#ffb169">
+            <rect x="320" y="190" width="10" height="14" opacity=".8" style="animation:winFlick 5s ease-in-out infinite; animation-delay:.2s;"/>
+            <rect x="345" y="220" width="10" height="14" opacity=".6" style="animation:winFlick 6.5s ease-in-out infinite; animation-delay:1.1s;"/>
+            <rect x="380" y="260" width="10" height="14" opacity=".9" style="animation:winFlick 4.2s ease-in-out infinite; animation-delay:.6s;"/>
+          </g>
+          <g fill="#6fe3ef">
+            <rect x="460" y="300" width="10" height="14" opacity=".7" style="animation:winFlick 5.8s ease-in-out infinite; animation-delay:.9s;"/>
+            <rect x="500" y="330" width="10" height="14" opacity=".5" style="animation:winFlick 7s ease-in-out infinite; animation-delay:2s;"/>
+            <rect x="610" y="240" width="10" height="14" opacity=".8" style="animation:winFlick 4.8s ease-in-out infinite; animation-delay:.3s;"/>
+          </g>
+        </svg>
+      </div>
+      <div class="lightning" aria-hidden="true"></div>
+      <div class="rain" id="rain" aria-hidden="true"></div>
+      <div class="hero-content">
+        <span class="eyebrow">Cellule d'intervention cyber · mission pilote</span>
+        <h1 class="logo">NOCTURNE<span class="dash">-7</span></h1>
+        <p class="tagline">02h14. Un orage, un hôpital basculé sur groupe électrogène, un système
+          de perfusion qui ne répond plus. Chaque piste que vous recoupez est du temps de mission
+          en moins pour restaurer un accès légitime.</p>
+        <div class="cta-row">
+          <button class="btn primary" data-go="mission">Commencer la mission</button>
+          <button class="btn ghost" data-go="parcours">Voir le parcours de navigation</button>
+          <button class="btn ghost" aria-disabled="true" title="Prévu pour une version ultérieure">Mode entraînement</button>
+          <button class="btn ghost" aria-disabled="true" title="Prévu pour une version ultérieure">Paramètres</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hud" id="hud" hidden>
+    <span class="tag">NOCTURNE-7 — Centre Hospitalier Aurore</span>
+    <span class="batt" id="battHud"><span class="dot"></span><span id="battTxt">30 min</span> de mission restantes</span>
+    <div class="stepper" id="stepper"></div>
+  </div>
+
+  <!-- ============ B. ÉCRAN DE MISSION ============ -->
+  <section class="scene" id="scene-mission" data-scene="mission">
+    <div class="panel">
+      <span class="stamp">Dossier — CIU-0147</span>
+      <p class="kicker">Briefing — 02h14</p>
+      <h2>Chambre 214, réanimation pédiatrique</h2>
+      <p>L'orage a fait basculer l'hôpital sur groupe électrogène. Le serveur <strong>PCA-Net</strong>,
+        qui pilote à distance les pompes à perfusion connectées de l'étage, ne répond plus aux
+        commandes du personnel soignant — et diffuse un dosage non validé à la pompe de Lina,
+        9 ans, en post-opératoire cardiaque.</p>
+      <p>Vous êtes la recrue de garde de la Cellule d'Intervention Cyber. Votre objectif : remonter
+        la chaîne d'accès jusqu'au serveur PCA-Net et restaurer un accès de maintenance légitime,
+        pour que le Dr Assaf puisse valider un dosage manuel sécurisé avant l'épuisement du temps
+        de mission disponible.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <p class="kicker">Personnel en lien</p>
+        <div class="people">
+          <div class="person"><div class="avatar">SA</div>
+            <div><strong>Dr Sofia Assaf</strong><span>Chirurgienne de garde. Seule habilitée à valider un dosage — vos actions techniques restaurent l'accès, les siennes décident du traitement.</span></div></div>
+          <div class="person"><div class="avatar">MO</div>
+            <div><strong>« Moss »</strong><span>Référent technique CIU — vous assiste à distance sur le réseau et le système.</span></div></div>
+          <div class="person"><div class="avatar">KM</div>
+            <div><strong>Keltis Médical</strong><span>Prestataire externe, fournisseur du boîtier PCA-Net. Une connexion de maintenance à distance est active — hors plage prévue.</span></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="kicker">Moniteur — Chambre 214</p>
+        <div class="monitor">
+          <div class="ecg-wrap" id="ecgMission">
+            <div class="ecg-track">
+              <svg viewBox="0 0 300 56" preserveAspectRatio="none"><path d="M0,28 L34,28 L40,10 L46,46 L52,22 L58,28 L96,28 L102,10 L108,46 L114,22 L120,28 L158,28 L164,10 L170,46 L176,22 L182,28 L220,28 L226,10 L232,46 L238,22 L244,28 L282,28 L288,10 L294,46 L300,22" fill="none" stroke="#ff8a4c" stroke-width="2"/></svg>
+              <svg viewBox="0 0 300 56" preserveAspectRatio="none"><path d="M0,28 L34,28 L40,10 L46,46 L52,22 L58,28 L96,28 L102,10 L108,46 L114,22 L120,28 L158,28 L164,10 L170,46 L176,22 L182,28 L220,28 L226,10 L232,46 L238,22 L244,28 L282,28 L288,10 L294,46 L300,22" fill="none" stroke="#ff8a4c" stroke-width="2"/></svg>
+            </div>
+          </div>
+          <div class="vital-row"><span class="lbl">Dosage perfusion</span><span class="val">Non validé</span></div>
+          <div class="vital-row"><span class="lbl">Rythme cardiaque</span><span class="val">118 bpm</span></div>
+          <div class="vital-row"><span class="lbl">Temps de mission</span><span class="val" id="battInline">30 min</span></div>
+          <div class="vital-row"><span class="lbl">Commande infirmière</span><span class="val">Rejetée</span></div>
+        </div>
+        <div class="pill" style="margin-top:12px;">⚠ Situation instable — action requise</div>
+      </div>
+    </div>
+
+    <div class="scene-nav">
+      <button class="btn ghost" data-go="accueil">← Retour à l'accueil</button>
+      <button class="btn primary" data-go="systeme">Examiner le réseau de l'hôpital →</button>
+    </div>
+  </section>
+
+  <!-- ============ C. ENVIRONNEMENT DE CYBERSÉCURITÉ ============ -->
+  <section class="scene" id="scene-systeme" data-scene="systeme">
+    <div class="panel">
+      <p class="kicker">Plan réseau — aile réanimation, étage 2</p>
+      <p>Sélectionnez une pièce pour consulter l'état de ses systèmes. Le journal rapide, à droite,
+        résume les événements depuis la bascule électrique — le terminal de l'étape suivante permet
+        d'aller beaucoup plus loin sur chaque hôte.</p>
+      <div class="net-wrap">
+        <svg class="floor-svg" viewBox="0 0 640 260" role="img" aria-label="Plan de l'étage : local technique BMS, salle serveurs PCA-Net, poste infirmier, chambre 214, accès distant Keltis">
+          <defs>
+            <filter id="blurGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7"/></filter>
+          </defs>
+          <line class="corridor" x1="160" y1="55" x2="400" y2="55"/>
+          <line class="corridor" x1="160" y1="55" x2="160" y2="185"/>
+          <line class="corridor" x1="400" y1="55" x2="400" y2="185"/>
+          <line class="corridor" x1="160" y1="185" x2="400" y2="185"/>
+          <line class="signal" x1="470" y1="40" x2="400" y2="55"/>
+
+          <g class="room flag" data-room="vpn" tabindex="0" role="button" aria-label="Accès distant Keltis Médical">
+            <rect class="card" x="470" y="14" width="150" height="52" rx="9"/>
+            <path class="ic" d="M486 34a8 8 0 0 1 14 -4 m-18 10a14 14 0 0 1 24 -8" transform="translate(0,2)"/>
+            <text x="508" y="38">Accès distant</text>
+            <text class="sub" x="508" y="50">Keltis Médical — actif ⚠</text>
+          </g>
+
+          <g class="room flag" data-room="bms" tabindex="0" role="button" aria-label="Local technique, gestion technique du bâtiment">
+            <rect x="140" y="30" width="80" height="80" rx="10" fill="var(--orange)" opacity=".15" filter="url(#blurGlow)" class="glow-pulse"/>
+            <rect class="card" x="16" y="12" width="144" height="60" rx="9"/>
+            <path class="ic" d="M34 42 l8 -14 l6 10 l6 -16 l6 20"/>
+            <text x="60" y="36">Local technique</text>
+            <text class="sub" x="60" y="48">BMS — 10.12.0.14</text>
+            <text class="sub" x="60" y="60">groupe électrogène</text>
+          </g>
+
+          <g class="room flag" data-room="pcanet" tabindex="0" role="button" aria-label="Salle serveurs, serveur PCA-Net">
+            <rect x="410" y="30" width="90" height="80" rx="10" fill="var(--red)" opacity=".16" filter="url(#blurGlow)" class="glow-pulse"/>
+            <rect class="card" x="256" y="12" width="144" height="60" rx="9"/>
+            <path class="ic" d="M274 24h16v10h-16zM274 38h16v10h-16z"/>
+            <text x="300" y="36">Salle serveurs</text>
+            <text class="sub" x="300" y="48">PCA-Net — 10.12.0.9</text>
+            <text class="sub" x="300" y="60">ne répond plus</text>
+          </g>
+
+          <g class="room" data-room="admin" tabindex="0" role="button" aria-label="Poste infirmier">
+            <rect class="card" x="16" y="142" width="144" height="60" rx="9"/>
+            <path class="ic" d="M34 184h16M34 190h10"/>
+            <text x="60" y="166">Poste infirmier</text>
+            <text class="sub" x="60" y="178">10.12.0.22</text>
+            <text class="sub" x="60" y="190">hors ligne 01:54</text>
+          </g>
+
+          <g class="room flag" data-room="chambre" tabindex="0" role="button" aria-label="Chambre 214">
+            <rect x="420" y="160" width="90" height="70" rx="10" fill="var(--orange)" opacity=".18" filter="url(#blurGlow)" class="glow-pulse"/>
+            <rect class="card" x="256" y="142" width="144" height="60" rx="9"/>
+            <path class="ic" d="M274 182h20v-8a4 4 0 0 1 4 -4h4 M274 182v6"/>
+            <text x="300" y="166">Chambre 214</text>
+            <text class="sub" x="300" y="178">pompe à perfusion</text>
+            <text class="sub" x="300" y="190">dosage non validé</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel detail-box">
+        <p class="kicker">Détail de la pièce sélectionnée</p>
+        <div id="nodeDetail"><p class="detail-empty">Sélectionnez une pièce sur le plan ci-dessus.</p></div>
+      </div>
+      <div class="panel">
+        <p class="kicker">Journal rapide</p>
+        <ul class="log-list">
+          <li><span class="t">01:42</span>Orage : bascule secteur → groupe électrogène.</li>
+          <li><span class="t">01:54</span>Poste infirmier : perte de connexion réseau.</li>
+          <li class="flag"><span class="t">01:58</span>Keltis Médical : connexion établie — hors plage de maintenance prévue.</li>
+          <li><span class="t">01:59</span>Serveur PCA-Net : dernière commande infirmière rejetée.</li>
+          <li class="flag"><span class="t">02:03</span>Pompe 214 : dosage modifié sans validation.</li>
+          <li><span class="t">02:11</span>Alerte infirmière déclenchée.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="scene-nav">
+      <button class="btn ghost" data-go="mission">← Revenir au briefing</button>
+      <button class="btn primary" data-go="exploit">Ouvrir le terminal d'analyse →</button>
+    </div>
+  </section>
+
+  <!-- ============ D. INTERACTION DE PENTEST ============ -->
+  <section class="scene" id="scene-exploit" data-scene="exploit">
+    <div class="panel">
+      <p class="kicker">Terminal d'analyse — unité mobile CIU</p>
+      <p>Le réseau 10.12.0.0/24 couvre le local technique, la salle serveurs et le poste infirmier.
+        Votre mandat ce soir : cartographier, investiguer, et rétablir un accès de maintenance
+        légitime sur <strong>PCA-Net</strong>. Le BMS et le poste infirmier ne sont couverts qu'en
+        lecture — y ouvrir une session reste possible, mais sort du périmètre autorisé.
+        Commencez par <code class="mono">help</code> si besoin.</p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="crt panel" style="padding:0;">
+          <div class="crt-screen">
+            <div class="term-out" id="termOut" role="log" aria-live="polite"></div>
+          </div>
+          <form class="term-form" id="termForm">
+            <span aria-hidden="true">❯</span>
+            <label class="visually-hidden" for="termInput">Commande terminal</label>
+            <input id="termInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="recon 10.12.0.0/24">
+            <button type="submit" class="btn small primary">Exécuter</button>
+          </form>
+        </div>
+        <p class="cmd-legend"><b>Commandes :</b> help · hosts · recon &lt;cible&gt; · ls · cat &lt;fichier&gt; ·
+          logs [--filter &lt;mot&gt;] · creds test &lt;hôte&gt; --user &lt;u&gt; --pass &lt;p&gt; ·
+          connect [&lt;hôte&gt;] --user &lt;u&gt; --pass &lt;p&gt; · conclude &lt;threadN&gt; &lt;confirmee|ecartee&gt; ·
+          status · hint · clear<br><b>Astuce :</b> ↑ / ↓ rappellent les commandes précédentes.</p>
+
+        <div class="access-panel" id="accessPanel">
+          <div class="panel" style="margin:0;">
+            <p class="kicker">Accès de maintenance obtenu</p>
+            <p class="ok-line">Session ouverte sur PCA-Net. Deux choses restent à décider.</p>
+            <p style="margin:0 0 8px; color:var(--fg-dim); font-size:13px;">1. Que faire de la connexion Keltis Médical, toujours active ?</p>
+            <div class="choice-row" id="choiceRow">
+              <button class="btn small danger" id="btnCut">Couper la session maintenant</button>
+              <button class="btn small warn2" id="btnMonitor">Laisser active, sous surveillance</button>
+            </div>
+            <p id="choiceNote" style="margin:10px 0 0; font-size:12.5px; color:var(--fg-dim);"></p>
+            <div id="transmitWrap" style="display:none; margin-top:12px; border-top:1px solid var(--line); padding-top:12px;">
+              <p style="margin:0 0 8px; color:var(--fg-dim); font-size:13px;">2. Transmettre l'accès validé au Dr Assaf, pour qu'elle confirme le dosage manuel.</p>
+              <button class="btn small primary" id="btnTransmit">Transmettre l'accès au Dr Assaf</button>
+              <p id="transmitNote" style="margin:10px 0 0; font-size:12.5px; color:var(--green); display:none;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <p class="kicker">Objectifs de mission</p>
+          <ul class="objectives" id="objectivesBox"></ul>
+        </div>
+        <div class="panel">
+          <p class="kicker">Indicateurs de mission</p>
+          <div class="gauges">
+            <div class="gauge" id="gaugeRisk">
+              <div class="ghead"><b>Risque opérationnel</b><span class="gval">0/100</span></div>
+              <div class="gtrack"><div class="gfill risk" style="width:0%"></div></div>
+            </div>
+            <div class="gauge" id="gaugeEvidence">
+              <div class="ghead"><b>Qualité des preuves</b><span class="gval">0/100</span></div>
+              <div class="gtrack"><div class="gfill evidence" style="width:0%"></div></div>
+            </div>
+            <div class="gauge" id="gaugeTrust">
+              <div class="ghead"><b>Confiance de l'équipe</b><span class="gval">50/100</span></div>
+              <div class="gtrack"><div class="gfill trust" style="width:50%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="kicker">Communications</p>
+          <div class="comms" id="commsBox"><p class="empty">Aucune communication pour l'instant.</p></div>
+        </div>
+        <div class="panel">
+          <p class="kicker">Pistes d'enquête</p>
+          <div class="threads" id="threadsBox"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-nav">
+      <button class="btn ghost" data-go="systeme">← Revenir au plan réseau</button>
+      <button class="btn primary" id="btnToResolution" aria-disabled="true">Rejoindre le Dr Assaf →</button>
+    </div>
+  </section>
+
+  <!-- ============ E. ÉVOLUTION DE LA MISSION / ÉPILOGUE ============ -->
+  <section class="scene" id="scene-resolution" data-scene="resolution">
+    <div class="resolution-hero panel" id="resolutionHero">
+      <p class="kicker" id="resolutionKicker">Bilan de mission</p>
+      <h2 id="resolutionTitle">Dosage repris en main</h2>
+      <p id="resolutionIntro">Avec l'accès de maintenance restauré, le Dr Assaf valide un dosage manuel sécurisé.</p>
+      <div class="ecg-wrap stable" id="ecgResolution">
+        <div class="ecg-track">
+          <svg viewBox="0 0 300 56" preserveAspectRatio="none"><path d="M0,30 L60,30 L66,16 L72,40 L78,26 L84,30 L160,30 L166,16 L172,40 L178,26 L184,30 L260,30 L266,16 L272,40 L278,26 L284,30 L300,30" fill="none" stroke="#52d68a" stroke-width="2"/></svg>
+          <svg viewBox="0 0 300 56" preserveAspectRatio="none"><path d="M0,30 L60,30 L66,16 L72,40 L78,26 L84,30 L160,30 L166,16 L172,40 L178,26 L184,30 L260,30 L266,16 L272,40 L278,26 L284,30 L300,30" fill="none" stroke="#52d68a" stroke-width="2"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <p class="kicker">Indicateurs finaux</p>
+        <div id="resolutionMetrics"></div>
+      </div>
+      <div class="panel">
+        <p class="kicker">Suite de la mission</p>
+        <div class="objective-new">
+          <span class="ico">!</span>
+          <div><strong>Nouvel objectif débloqué</strong>
+            <p id="decisionNote" style="margin-top:4px;"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="panel">
+        <p class="kicker">Récapitulatif d'enquête</p>
+        <ul class="recap-list" id="recapList"></ul>
+      </div>
+      <div class="panel">
+        <p class="kicker">Recommandations correctives</p>
+        <ul class="recap-list" id="recommendList"></ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p class="kicker">Chronologie de la mission</p>
+      <ul class="timeline-list" id="timelineList"></ul>
+    </div>
+
+    <div class="scene-nav">
+      <button class="btn ghost" data-go="exploit">← Revenir au terminal</button>
+      <button class="btn ghost" data-go="parcours">Voir comment s'enchaînent les écrans →</button>
+    </div>
+  </section>
+
+  <!-- ============ F. PARCOURS DE NAVIGATION ============ -->
+  <section class="scene" id="scene-parcours" data-scene="parcours">
+    <div class="panel">
+      <p class="kicker">Comment le joueur se déplace dans le jeu</p>
+      <h2>De l'histoire aux conséquences, en quatre temps</h2>
+      <p>Chaque mission suit le même enchaînement. Les mêmes quatre temps se répètent, avec de
+        nouveaux lieux et de nouvelles failles, jusqu'à la résolution complète de l'incident.</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div><h3>Histoire — le briefing</h3>
+          <p>Le joueur découvre le contexte d'urgence, les personnages impliqués et l'objectif à atteindre.</p>
+          <a class="goto" data-go="mission" href="#mission">Revoir cet écran ↗</a></div></div>
+        <div class="flow-step"><div class="flow-num">2</div><div><h3>Exploration — le plan réseau</h3>
+          <p>Le joueur repère les pièces et systèmes impliqués sur un plan interactif.</p>
+          <a class="goto" data-go="systeme" href="#systeme">Revoir cet écran ↗</a></div></div>
+        <div class="flow-step"><div class="flow-num">3</div><div><h3>Analyse technique — le terminal</h3>
+          <p>Reconnaissance réseau, lecture de journaux et de documents, comparaison de plusieurs hypothèses, puis une authentification qui restaure un accès légitime.</p>
+          <a class="goto" data-go="exploit" href="#exploit">Revoir cet écran ↗</a></div></div>
+        <div class="flow-step"><div class="flow-num">4</div><div><h3>Conséquences — l'évolution de la mission</h3>
+          <p>L'action technique produit un effet visible, une décision de confinement à prendre, et un dénouement qui dépend du temps de mission consommé.</p>
+          <a class="goto" data-go="resolution" href="#resolution">Revoir cet écran ↗</a></div></div>
+      </div>
+    </div>
+    <div class="scene-nav">
+      <button class="btn ghost" data-go="accueil">← Retour à l'accueil</button>
+      <button class="btn primary" data-go="mission">Rejouer le début de la mission →</button>
+    </div>
+  </section>
+
+</div>
+
+<button class="review-toggle" id="reviewToggle" aria-expanded="false" aria-controls="reviewPanel">Plan du jeu</button>
+<div class="review-panel" id="reviewPanel">
+  <div class="rp-title">Aller directement à</div>
+  <button data-go="accueil">A — Écran d'accueil</button>
+  <button data-go="mission">B — Écran de mission</button>
+  <button data-go="systeme">C — Environnement cyber</button>
+  <button data-go="exploit">D — Terminal de pentest</button>
+  <button data-go="resolution">E — Évolution de la mission</button>
+  <button data-go="parcours">F — Parcours de navigation</button>
+</div>
+
+<script src="src/engine.js"></script>
+<script src="src/ui.js"></script>
+
+</body></html>
